@@ -13,28 +13,20 @@ server.use(cors());
 const PORT = process.env.PORT;
 
 server.listen(PORT, () => {
-    console.log(`server lisin ${PORT}`);
+    console.log(`server listening ${PORT}`);
 })
-class ForCast {
-    constructor(date, description) {
-        this.date = date;
-        this.description = description;
-    }
-}
 server.get('/weather', (req, res) => {
-    let city = req.query.searchQuery;
+    let city = req.query.quearySearch;
     let lat = req.query.lat;
-    let long = req.query.long;
-    
+    let long = req.query.lon;
     
     let found = weatherData.find((element) => {
-        if (city.toLowerCase() == element.city_name.toLowerCase() && lat == element.lat && long == element.lon) {
+        if (city.toLowerCase() == element.city_name.toLowerCase() ) {
             
             return element;
         }
         
     })
-    
     try {
        
         let forcastArr = [];
@@ -50,6 +42,17 @@ server.get('/weather', (req, res) => {
         
         res.send(forcastArr);
     } catch(error) {
-        res.status(500).send('Sorry, cant find that');
+        res.status(500).send('Try Another City Please');
     }
-})
+    })
+    server.get('*', (req, res) => {
+        res.send('cant reached');
+    })
+class ForCast {
+    constructor(date, description) {
+        this.date = date;
+        this.description = description;
+    }
+}
+    
+    
