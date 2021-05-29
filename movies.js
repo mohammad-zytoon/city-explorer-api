@@ -15,11 +15,20 @@ class Movie {
     }
 }
 
+let memoryO={};
+
 function movieHandler(req, res) {
 
     let key = process.env.MOVIE_API_KEY;
     let mQuery = req.query.quearySearch;
     let mUrl = `https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${mQuery}`;
+
+    if(memoryO[mQuery]!==undefined){
+        console.log('get the data from movies server')
+        res.send(inmemory[mQuery])
+    }else{
+        console.log('get the data from the API Server');}
+
     
 
     axios
